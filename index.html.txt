@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinecone Daisy Distribution Map</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Custom styles -->
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pinecone Daisy Distribution</h1>
+    <div id="map"></div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Coordinates of the Pinecone Daisy
+        const coord1 = [28.2013889, 112.907875];  // 28°12'5.06"N, 112°54'28.33"E
+        const coord2 = [28.1597222, 112.975417];  // 28°9'34.90"N, 112°58'31.47"E
+
+        // Initialize the map and set the view to the average of both coordinates
+        const map = L.map('map').setView([28.18, 112.94], 13);  // Set initial zoom level and center point
+
+        // Add a tile layer (OpenStreetMap tiles here)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Add markers for both locations
+        L.marker(coord1).addTo(map)
+            .bindPopup("<b>Pinecone Daisy Location 1</b><br>28°12'5.06\"N, 112°54'28.33\"E")
+            .openPopup();
+
+        L.marker(coord2).addTo(map)
+            .bindPopup("<b>Pinecone Daisy Location 2</b><br>28°9'34.90\"N, 112°58'31.47\"E");
+
+        // Optionally, you can add a polyline between the two coordinates
+        const latlngs = [coord1, coord2];
+        const polyline = L.polyline(latlngs, {color: 'blue'}).addTo(map);
+
+        // Zoom the map to the polyline's bounds
+        map.fitBounds(polyline.getBounds());
+    </script>
+</body>
+</html>
